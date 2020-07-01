@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Digital Readiness Assessment Tool Report</title>
+    <style>
+        {{css}}
+        {{css2}}
+    </style>
+
+</head>
+
+<body>
+    <div class="row">
+        <img src="{{banner}}" alt="banner" class="banner">
+
+        <div>
+            <img src="{{logo}}" class="logo" alt="logo">
+        </div>
+        <div class="title">
+            <span> Digital Readiness <br>
+                Assessment Tool </span><br>
+            <span class="font-blue">Recommendations </span>
+        </div>
+        <img src="{{female}}" alt="Snow" class="female">
+    </div>
+    <main>
+        <div class="row ">
+            {{#each pdfData}}
+            <div class="col-6 block-border-left">
+
+                <div style="">
+                    <img src="{{../idea}}" alt="nosd" class="idea">
+                    <h3 class="recommendation-title"> Recommendation {{inc @index}}</h3>
+                </div>
+                <div class="recommendation-block">
+                    <div>
+                        <p class="recommendation-text">
+                            You noted that <span class="toppriotiry">{{this.[0].goalText}}</span> is a top objective
+                            driving your contact center
+                            programs. We suggest that you consider adding <span class="digitalchannel">
+                                {{this.[0].channelText}}</span> within your CX
+                            channel-mix to maximize your likelihood to achieve this goal.
+                        </p>
+                    </div>
+                    <div>
+                        <img src="{{img @index}}" alt="barChart" class="recommendation-image">
+                        <p class="recommendation-text">
+                            The results show that contact centers using
+                            <span class="digitalchannel">{{this.[0].channelText}} </span> achieve {{#each this}}<span
+                                class="toppriotiry">{{result}}% {{kpiText}}</span> {{#if @last}} {{else}}and {{/if}}
+                            {{/each}}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+            {{/each}}
+            <div class="col-6 block-border-left">
+                <div class="v-algin  text-center">
+                    <p class="sign-up-text">Want to learn how you can start implementing these channels?</p><br>
+
+                    <a class="sign-up" href="https://www.niceincontact.com/contact-us">Sign-up for a consultation</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center note">
+            <p class="font-italic"> Aberdeen Research captured data across 405 contact centers around the world
+                to determine how each digital channel impacts performance results.</p>
+        </div>
+    </main>
+    <div class="row footer">
+        <div class="col-3">
+
+            <img src="{{logo}}" class="footer-logo" alt="Snow">
+
+        </div>
+        <div class="col-9">
+            <span> <a class="web-link" href="https://www.niceincontact.com/">www.niceincontact.com</a> | 877-401-7227 |
+                75 West Towne Ridge Parkway, Tower 1, Salt Lake City, UT
+                84070</span>
+        </div>
+    </div>
+</body>
+<body>
