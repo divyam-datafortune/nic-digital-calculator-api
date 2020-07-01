@@ -76,7 +76,7 @@ module.exports.generate = async (req) => {
 
   try {
 
-    const pdfName = 'Nice-in-Connect-Recommendation-Report_' + Date.now() + '.pdf';
+    const pdfName = 'NICE-InContact-Recommendation-Report-' + Date.now() + '.pdf';
     config.PDF_OPTIONS.path = `./upload/${pdfName}`;
 
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
