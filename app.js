@@ -3,14 +3,11 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const compression = require('compression');
-const helmet = require('helmet');
 
 const config = require('./configuration');
 const routes = require('./routes/router');
 
 const app = express();
-
-app.use(helmet());
 
 app.use(cors());
 
