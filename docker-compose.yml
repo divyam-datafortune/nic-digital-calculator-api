@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  api:
+    build: .
+    container_name: "nic-calculator-api"
+    ports:
+      - '3000:3000'
+    volumes:
+      - /var/www/node_modules
+      - .:/var/www
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
