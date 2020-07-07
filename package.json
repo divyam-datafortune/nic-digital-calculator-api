@@ -13,8 +13,6 @@
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "handlebars": "^4.7.6",
-    "nodemailer": "^6.4.8",
-    "nodemailer-plugin-inline-base64": "^2.1.1",
     "nodemon": "^2.0.4",
     "puppeteer": "^3.3.0"
   }
