@@ -36,5 +36,5 @@ Confirm that the image was created and copy the "IMAGE ID":
 
 Run a Docker container
 
-    docker run -p 8081:8081 IMAGE_ID
+    docker run -p 8081:3000 IMAGE_ID
 
