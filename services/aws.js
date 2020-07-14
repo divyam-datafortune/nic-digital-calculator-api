@@ -10,7 +10,7 @@ module.exports.uploadPdfBuffer = async (buffer) => {
     accessKeyId: process.env.CLOUDCUBE_ACCESS_KEY_ID,
     secretAccessKey: process.env.CLOUDCUBE_SECRET_ACCESS_KEY,
     region: process.env.CLOUDCUBE_REGION,
-    apiVersion: process.env.CLOUDCUBE_API_VERSION
+    apiVersion: 'latest',
   });
 
   const s3 = new aws.S3();
