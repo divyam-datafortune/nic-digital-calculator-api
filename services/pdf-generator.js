@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
+const awsHandler = require('../services/aws');
 
 const config = require('../configuration');
 
@@ -76,15 +77,14 @@ module.exports.generate = async (req) => {
 
   try {
 
-    const pdfName = 'NICE-InContact-Recommendation-Report-' + Date.now() + '.pdf';
-    config.PDF_OPTIONS.path = `./upload/${pdfName}`;
-
     const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: 'networkidle0' });
-    await page.pdf(config.PDF_OPTIONS)  //to store and send file path
+    const pdfBuffer = await page.pdf(config.PDF_OPTIONS)  //to store and send file path
+
+    const filePath = await awsHandler.uploadPdfBuffer(pdfBuffer);
     await browser.close();
-    return pdfName
+    return filePath
   } catch (error) {
     console.log(error);
   }
