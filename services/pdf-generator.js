@@ -4,25 +4,21 @@ const fs = require('fs');
 const path = require('path');
 const handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
-const awsHandler = require('../services/aws');
+const awsHandler = require('./aws');
 
 const config = require('../configuration');
 
-const images = [
-  'bar-chart.png',
-  'stars.png',
-  'graph.png'
-]
+const images = ['bar-chart.png', 'stars.png', 'graph.png'];
 
 /**
  * Custom Handlebars
  */
-handlebars.registerHelper("inc", function (value, options) {
-  return parseInt(value) + 1;
-});
-handlebars.registerHelper('img', function (value, options) {
+handlebars.registerHelper('inc', (value) => parseInt(value, 10) + 1);
+handlebars.registerHelper('img', (value) => {
   const image = `data:image/png;base64,${fs
-    .readFileSync(path.join(process.cwd(), './templates/images/', images[value]))
+    .readFileSync(
+      path.join(process.cwd(), './templates/images/', images[value]),
+    )
     .toString('base64')}`;
   return image;
 });
@@ -45,10 +41,14 @@ function compileHbs(pdfData) {
     .readFileSync(path.join(process.cwd(), './templates/images/Logo.png'))
     .toString('base64')}`;
   const banner = `data:image/png;base64,${fs
-    .readFileSync(path.join(process.cwd(), './templates/images/home-banner.png'))
+    .readFileSync(
+      path.join(process.cwd(), './templates/images/home-banner.png'),
+    )
     .toString('base64')}`;
   const female = `data:image/png;base64,${fs
-    .readFileSync(path.join(process.cwd(), './templates/images/photo-female.png'))
+    .readFileSync(
+      path.join(process.cwd(), './templates/images/photo-female.png'),
+    )
     .toString('base64')}`;
   const idea = `data:image/png;base64,${fs
     .readFileSync(path.join(process.cwd(), './templates/images/idea.png'))
@@ -75,17 +75,14 @@ function compileHbs(pdfData) {
 module.exports.generate = async (req) => {
   const html = compileHbs(req.body.pdfData);
 
-  try {
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  });
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: 'networkidle0' });
+  const pdfBuffer = await page.pdf(config.PDF_OPTIONS);
+  const filePath = await awsHandler.uploadPdfBuffer(pdfBuffer);
+  await browser.close();
 
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-    const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: 'networkidle0' });
-    const pdfBuffer = await page.pdf(config.PDF_OPTIONS)  //to store and send file path
-
-    const filePath = await awsHandler.uploadPdfBuffer(pdfBuffer);
-    await browser.close();
-    return filePath
-  } catch (error) {
-    console.log(error);
-  }
+  return filePath;
 };

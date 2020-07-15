@@ -15,14 +15,15 @@ app.use(cors());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-require('dotenv').config({path: __dirname + '/.env'})
+require('dotenv').config({ path: `${__dirname}/.env` });
+
 app.use(
   bodyParser.urlencoded({
     extended: true,
   }),
 );
 
-dotenv.config({path: __dirname + '/.env'})
+dotenv.config({ path: `${__dirname}/.env` });
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'upload')));

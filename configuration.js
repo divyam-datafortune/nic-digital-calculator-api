@@ -3,7 +3,7 @@ module.exports = {
   PUBLIC_URL: process.env.PUBLIC_URL || 'http://localhost:3000/',
 
   PDF_OPTIONS: {
-    format: "A4",
+    format: 'A4',
     displayHeaderFooter: false,
     margin: {
       top: '0px',
@@ -11,6 +11,6 @@ module.exports = {
       bottom: '0px',
       left: '0px',
     },
-    printBackground: true
+    printBackground: true,
   },
 };

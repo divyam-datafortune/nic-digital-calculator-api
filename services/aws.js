@@ -1,11 +1,11 @@
 const aws = require('aws-sdk');
+
 /**
  *To save pdf files on s3 bucket
  * @param pdf - request data
  * @returns Pdf file  public url
  */
 module.exports.uploadPdfBuffer = async (buffer) => {
-
   const s3 = new aws.S3({
     accessKeyId: process.env.CLOUDCUBE_ACCESS_KEY_ID,
     secretAccessKey: process.env.CLOUDCUBE_SECRET_ACCESS_KEY,
@@ -16,9 +16,10 @@ module.exports.uploadPdfBuffer = async (buffer) => {
 
   const uploadParams = { Bucket: 'cloud-cube', Key: fileName, Body: buffer };
 
-  s3.upload(uploadParams, function (err, data) {
+  s3.upload(uploadParams, (err) => {
     if (err) {
-      console.log("Error", err);
+      // eslint-disable-next-line no-console
+      console.log('Error', err);
     }
   });
   return filePath;

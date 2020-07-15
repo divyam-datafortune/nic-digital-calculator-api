@@ -1,13 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+
+const router = express.Router();
 const pdfGenerator = require('../services/pdf-generator');
 
 /* GET pdf url. */
-router.post('/generate-pdf', function (req, res, next) {
+router.post('/generate-pdf', (req, res) => {
   const result = pdfGenerator.generate(req);
-  result.then(value => {
-    const pdfLink = value
-    res.send(pdfLink)
+  result.then((value) => {
+    const pdfLink = value;
+    res.send(pdfLink);
     res.end();
   });
 });
